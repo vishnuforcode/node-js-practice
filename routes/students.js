@@ -35,6 +35,28 @@ router.delete("/:id", async (req,res)=>{
     }
 } )
 
+router.put ('/:id' , async(req,res)=>{
+    try{
+        const id = req.params.id
+        const updatedStudent = req.body
+
+        const response = await students.findByIdAndUpdate(id , updatedStudent, {
+            new :true,
+            runValidators :true
+        } )
+        if(!response){
+            return res.status(404).json({errror: 'Menu not found'})
+        }
+        console.log("data updated")
+        res.status(200).json(response)
+
+
+    }catch(err){
+        console.log(err)
+        res.status(500).json({error: "Internal server error"})
+
+    }
+})
 
 
 
